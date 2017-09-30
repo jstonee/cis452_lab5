@@ -1,0 +1,58 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <sys/types.h> 
+#include <sys/stat.h>
+#include <sys/ipc.h> 
+#include <sys/shm.h>
+#include <unistd.h>
+#include <signal.h>
+#include <string.h>
+
+#define FOO 4096
+
+void sigHandler(int);
+
+const int SIZE 64;
+
+int main () 
+{ 
+	struct key_t key = ftok(key.txt, 42); 
+	int shmId; 
+	char *shmPtr;
+	
+	if ((shmId = shmget (key, FOO, IPC_CREAT|S_IRUSR|S_IWUSR)) < 0) { 
+		perror ("i can't get no..\n"); 
+		exit (1); 
+	} 
+	if ((shmPtr = shmat (shmId, 0, 0)) == (void*) -1) { 
+		perror ("can't attach\n"); 
+		exit (1); 
+	}
+	
+	while(1) {
+		// write to shared memory
+		// dup2 stdin to shmptr or fgets
+		
+	}
+	
+	return 0;
+}
+
+void sigHandler(int sigNum)
+{
+	if(sigNum == SIGINT) {
+		if (shmdt (shmPtr) < 0) { 
+			perror ("just can't let go\n"); 
+			exit (1); 
+		} 
+		
+		if (shmctl (shmId, IPC_RMID, 0) < 0) { 
+			perror ("can't deallocate\n"); 
+			exit(1); 
+		}
+		
+		printf("Shutting down...\n");
+		
+		exit(0);
+	}
+}
