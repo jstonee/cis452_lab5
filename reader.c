@@ -1,4 +1,4 @@
-// Writer Program
+// Reader Program
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <sys/types.h> 
@@ -21,7 +21,7 @@ int main ()
 	int shmId; 
 	char *shmPtr;
 	
-	if ((shmId = shmget (key, FOO, IPC_CREAT|S_IRUSR|S_IWUSR)) < 0) { 
+	if ((shmId = shmget (key, FOO, S_IRUSR|S_IWUSR)) < 0) { 
 		perror ("i can't get no..\n"); 
 		exit (1); 
 	} 
@@ -32,10 +32,9 @@ int main ()
 	
 	while(1) {
 		// Get Flags
-		// write to shared memory
-		// fgets
+		// read from shared memory
+		// fprints 
 		// Change flags
-		
 	}
 	
 	return 0;
