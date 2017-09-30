@@ -13,13 +13,14 @@
 
 void sigHandler(int);
 
-const int SIZE 64;
+const int SIZE = 64;
+int shmId; 
+char *shmPtr;
 
 int main () 
 { 
-	struct key_t key = ftok(key.txt, 42); 
-	int shmId; 
-	char *shmPtr;
+	int key = ftok("key.txt", 42); 
+	
 	
 	if ((shmId = shmget (key, FOO, IPC_CREAT|S_IRUSR|S_IWUSR)) < 0) { 
 		perror ("i can't get no..\n"); 
