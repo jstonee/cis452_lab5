@@ -19,7 +19,8 @@ void sigHandler(int);
 
 const int SIZE = 64;
 int shmId; 
-char *shmPtr, *shmS;
+char *shmPtr, *shmS, *i, *j, *turn;
+char input[128];
 
 int main () 
 { 
@@ -51,14 +52,32 @@ int main ()
 	shmS = shmPtr;
 	#if (DEBUG == 1)
 		*shmS = 'H';
+		shmS
 	#endif
 	
+	// setup flag pointers
+	
+	// First value, i, will be Flag Writer (T or F).
+	// Next value, j, will be Flag Reader (T or F.
+	// Third value, turn, will turn (W or R)
+	i = shmS;
+	j = shmS++;
+	turn = shmS++;
+	shmS++;
+	
 	while(1) {
-		// Get Flags
 		// fgets 
-		// write to shared memory i.e. *shms = ...
-		// Change flags
+		fgets(input, sizeof(input), stdin);
 		
+		//Flag i = true
+		*i = 'T';
+		//Turn = Reader
+		*turn = 'R';
+		while(*j == 'T' && *turn == 'R');
+		// write to shared memory (CS)
+		sprintf(shmS, "%s", input);
+		// Change flags
+		*i = 'F';
 	}
 	
 	return 0;
